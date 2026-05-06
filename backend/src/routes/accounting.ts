@@ -326,7 +326,7 @@ router.get('/general-ledger', async (req: Request, res: Response) => {
     const accounts = await prisma.account.findMany({
       where: {
         ...(accountCode && {
-          code: { contains: accountCode as string, mode: 'insensitive' },
+          code: { contains: accountCode as string },
         }),
         ...(type && {
           subgroup: {
@@ -357,9 +357,9 @@ router.get('/general-ledger', async (req: Request, res: Response) => {
     });
     
     // Calculate running balances
-    const ledgerAccounts = accounts.map((account) => {
+    const ledgerAccounts = accounts.map((account: any) => {
       let runningBalance = account.openingBalance;
-      const transactions = account.journalLines.map((line) => {
+      const transactions = (account.journalLines || []).map((line: any) => {
         runningBalance += line.debit - line.credit;
         return {
           id: line.id,

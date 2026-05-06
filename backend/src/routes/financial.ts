@@ -80,10 +80,10 @@ router.get('/general-journal', async (req: Request, res: Response) => {
 
     // Apply filters
     if (from_date) {
-      filteredEntries = filteredEntries.filter(e => e.date >= from_date as string);
+      filteredEntries = filteredEntries.filter(e => e.date >= (from_date as unknown as string));
     }
     if (to_date) {
-      filteredEntries = filteredEntries.filter(e => e.date <= to_date as string);
+      filteredEntries = filteredEntries.filter(e => e.date <= (to_date as unknown as string));
     }
     if (search && search_by) {
       const searchLower = (search as string).toLowerCase();
@@ -263,13 +263,13 @@ router.get('/ledgers', async (req: Request, res: Response) => {
     if (from_date) {
       filteredEntries = filteredEntries.filter(e => {
         if (e.timeStamp === '-') return true;
-        return e.timeStamp >= from_date as string;
+        return e.timeStamp >= (from_date as unknown as string);
       });
     }
     if (to_date) {
       filteredEntries = filteredEntries.filter(e => {
         if (e.timeStamp === '-') return true;
-        return e.timeStamp <= to_date as string;
+        return e.timeStamp <= (to_date as unknown as string);
       });
     }
 

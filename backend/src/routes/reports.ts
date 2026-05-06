@@ -829,9 +829,6 @@ router.get('/analytics/customers', async (req: Request, res: Response) => {
 
     const customers = await prisma.customer.findMany({
       where: customer_id ? { id: customer_id as string } : {},
-      include: {
-        // Note: Invoices relation doesn't exist in schema, so we'll use mock data structure
-      },
     });
 
     // Since invoices don't exist, return customer data with placeholder values
